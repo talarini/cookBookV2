@@ -6,8 +6,8 @@
 <%=f.label :recipe_type, 'Tipo da Receita' %>
 <%=f.text_field :recipe_type %>
 
-<%=f.label :cuisine, 'Cozinha' %>
-<%=f.text_field :cuisine %>
+<%=f.label :cuisine_id, 'Cozinha' %>
+<%=f.collection_select(:cuisine_id, Cuisine.all, :id , :name) %>
 
 <%=f.label :portion, 'Quantidade de Porçoes' %>
 <%=f.number_field :portion %>
