@@ -1,7 +1,9 @@
 <h1>CookBook</h1>
 <p>Bem-vindo ao maior livro de receitas online</p>
 
-<% @recipe.each do |recipe| %>
+<%= link_to('Enviar uma receita', new_recipe_path) %>
+
+<% @recipes.each do |recipe| %>
 <h1><%= link_to recipe.title, recipe_path(recipe.id)%></h1>
 <li><%= recipe.recipe_type %></li>
 <li><%= recipe.cuisine %></li>
