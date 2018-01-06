@@ -10,15 +10,17 @@ class RecipeTypesController <ApplicationController
   end
 
   def create
-    @recipe_type = RecipeType.create(recipe_types_params)
+    @recipe_type = RecipeType.create(recipe_type_params)
+    if @recipe_type.save
+      redirect_to recipe_type_path(@recipe_type)
+    else
+      render '_error'
+    end
   end
 
   private
 
-  def recipe_params
+  def recipe_type_params
     params.require(:recipe_type).permit(:name)
-  end
-
-
-
+  end  
 end
