@@ -1,0 +1,33 @@
+<html>
+
+<div class="form-group">
+
+  <%= form_for (@recipe) do |f| %>
+
+  <%= f.label :title, 'Título' %>
+  <%= f.text_field :title %>
+
+  <%= f.label :recipe_type_id, 'Tipo da Receita' %>
+  <%= f.collection_select(:recipe_type_id, RecipeType.all, :id, :name, include_blank: 'Selecione' )%>
+
+  <%= f.label :cuisine_id, 'Cozinha' %>
+  <%= f.collection_select(:cuisine_id, Cuisine.all, :id, :name, include_blank: 'Selecione')%>
+
+  <%= f.label :difficulty, 'Dificuldade' %>
+  <!-- <%= f.select(:difficulty, options_for_select([['Fácil', 'Fácil'], ['Medio', 'Medio'], ['Dificil', 'Difícil']]))%> -->
+  <%= f.text_field :difficulty %>
+
+  <%= f.label :cook_time, 'Tempo de Preparo' %>
+  <%= f.number_field :cook_time %>
+
+  <%= f.label :ingredients, 'Ingredientes' %>
+  <%= f.text_area :ingredients %>
+
+  <%= f.label :method, 'Como Preparar' %>
+  <%= f.text_area :method %>
+
+  <%= f.submit 'Enviar'%>
+
+  <% end %>
+</div>
+</html>
