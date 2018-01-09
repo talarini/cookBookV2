@@ -14,7 +14,8 @@ class RecipeTypesController <ApplicationController
     if @recipe_type.save
       redirect_to recipe_type_path(@recipe_type)
     else
-      render '_error'
+      flash.now[:error] = 'Você deve informar o nome do tipo de receita'
+      render 'new'
     end
   end
 
@@ -22,5 +23,5 @@ class RecipeTypesController <ApplicationController
 
   def recipe_type_params
     params.require(:recipe_type).permit(:name)
-  end  
+  end
 end

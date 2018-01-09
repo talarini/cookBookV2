@@ -7,14 +7,20 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
+    @cuisines = Cuisine.all
+    @recipe_types = RecipeType.all
   end
 
   def create
     @recipe = Recipe.create(recipe_params)
+    @cuisines = Cuisine.all
+    @recipe_types = RecipeType.all
+
     if @recipe.save
       redirect_to @recipe
     else
-      render '_error'
+      flash.now[:error] = 'Você deve informar todos os dados da receita'
+      render 'new'
     end
   end
 
@@ -24,11 +30,14 @@ class RecipesController < ApplicationController
 
   def update
     @recipe = Recipe.find(params[:id])
+    @cuisines = Cuisine.all
+    @recipe_types = RecipeType.all
     @recipe.update(recipe_params)
     if @recipe.save
       redirect_to recipe_path(@recipe)
     else
-      render '_error'
+      flash.now[:error] = 'Você deve informar todos os dados da receita'
+      render 'new'
     end
   end
 

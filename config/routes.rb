@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :cuisines, only: [:show, :new, :create]
   resources :recipe_types, only: [:show, :new, :create]
 
-get "/search" => "recipes#search", as: :search_recipe
-  #get "/search" => "recipes#search", as :search_recipe
+  get "/search" => "recipes#search", as: :search_recipe
 
 end
