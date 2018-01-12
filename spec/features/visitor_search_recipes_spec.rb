@@ -3,21 +3,18 @@ require 'rails_helper'
 feature 'Visitor search for recipes' do
   scenario 'from home page' do
     # cria os dados necessários previamente
-    cuisine = Cuisine.create(name: 'Brasileira')
-    recipe_type = RecipeType.create(name: 'Sobremesa')
-    another_recipe_type = RecipeType.create(name: 'Entrada')
+    user = create (:user)
+    sign_in user
 
-    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                           cuisine: cuisine, difficulty: 'Médio',
-                           cook_time: 60,
-                           ingredients: 'Farinha, açucar, cenoura',
-                           method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+    cuisine = create(:cuisine ,name: 'Brasileira')
+    recipe_type = create(:recipe_type , name:'Sobremesa')
+    another_recipe_type = create(:recipe_type, name: 'Entrada')
 
-    another_recipe = Recipe.create(title: 'Salada de cenoura', recipe_type: another_recipe_type,
-                           cuisine: cuisine, difficulty: 'Facil',
-                           cook_time: 60,
-                           ingredients: 'Cenoura e legumes',
-                           method: 'Cozinhe a cenoura, misture com os legumes')
+    recipe = create(:recipe, title: 'Bolo de cenoura', recipe_type: recipe_type,
+                           cuisine: cuisine,user:user)
+
+    another_recipe = create(:recipe, title: 'Salada de cenoura', recipe_type: another_recipe_type,
+                           cuisine: cuisine,user: user)
 
     # simula a ação do usuário
     visit root_path
@@ -25,7 +22,7 @@ feature 'Visitor search for recipes' do
     click_on 'Buscar'
 
     # expectativas do usuário após a ação
-    expect(page).to have_css('h1', text: 'Resultado da busca por: Bolo de cenoura')
+    expect(page).to have_css('h1', text: "Resultado da busca por: #{recipe.title}")
     expect(page).to have_css('h1', text: recipe.title)
     expect(page).to have_css('li', text: recipe.recipe_type.name)
     expect(page).to have_css('li', text: recipe.cuisine.name)
@@ -36,14 +33,13 @@ feature 'Visitor search for recipes' do
 
   scenario 'and navigate to recipe details' do
     # cria os dados necessários previamente
-    cuisine = Cuisine.create(name: 'Brasileira')
-    recipe_type = RecipeType.create(name: 'Sobremesa')
+    user = create (:user)
+    sign_in user
+    cuisine = create(:cuisine, name: 'Brasileira')
+    recipe_type = create(:recipe_type, name: 'Sobremesa')
 
-    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                           cuisine: cuisine, difficulty: 'Médio',
-                           cook_time: 60,
-                           ingredients: 'Farinha, açucar, cenoura',
-                           method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+    recipe = create(:recipe, title: 'Bolo de cenoura', recipe_type: recipe_type,
+                           cuisine: cuisine , user:user)
 
     # simula a ação do usuário
     visit root_path

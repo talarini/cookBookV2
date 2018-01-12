@@ -1,20 +1,24 @@
-<h1><%= @recipes.title%></h1>
+<h1><%= @recipe.title%></h1>
 
 <h3>Detalhes</h3>
-<p><%= @recipes.recipe_type.name %></p>
-<p><%= @recipes.cuisine.name %></p>
-<p><%= @recipes.difficulty %></p>
-<p><%= @recipes.cook_time %> minutos</p>
+<p><%= @recipe.recipe_type.name %></p>
+<p><%= @recipe.cuisine.name %></p>
+<p><%= @recipe.difficulty %></p>
+<p><%= @recipe.cook_time %> minutos</p>
 <h3>Ingredientes</h3>
 
-<p><%= @recipes.ingredients %></p>
+<p><%= @recipe.ingredients %></p>
 <h3>Como Preparar</h3>
-<p><%= @recipes.method %></p>
+<p><%= @recipe.method %></p>
 
-<%= link_to "Editar", edit_recipe_path(@recipes)%>
+<h3>Enviado por</h3>
+<p><%= @recipe.user.email %>
 
-<%= form_tag(recipe_path(@recipes), method: 'DELETE') do %>
-<%= submit_tag "Remover Receita", data: {confirm: 'Deseja remover esta receita?'} %>
-<%end%>
 
-<%= link_to "Voltar", root_path %>
+<%= link_to "Editar", edit_recipe_path(@recipe)%>
+
+<%= form_tag(recipe_path(@recipe), method: 'DELETE') do %>
+  <%= submit_tag "Remover Receita", data: {confirm: 'Deseja remover esta receita?'} %>
+  <%end%>
+
+  <%= link_to "Voltar", root_path %>

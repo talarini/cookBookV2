@@ -1,7 +1,6 @@
 class CuisinesController <ApplicationController
   def show
-    @cuisines = Cuisine.find(params[:id])
-    @recipes = Recipe.where(cuisine_id: params[:id])
+    @cuisine = Cuisine.find(params[:id])
   end
 
   def new
@@ -11,10 +10,10 @@ class CuisinesController <ApplicationController
   def create
     @cuisine = Cuisine.create(cuisine_params)
     if @cuisine.save
-      redirect_to cuisine_path(@cuisine)
+      redirect_to @cuisine
     else
       flash.now[:alert] = 'Você deve informar o nome da cozinha'
-      render 'new'
+      render :new
     end
   end
 

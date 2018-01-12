@@ -2,18 +2,24 @@ require 'rails_helper'
 
 feature 'logged user create recipe' do
   scenario 'successfully' do
-    user = User.create(email:'aaa@email.com', password:'123456')
-    cuisine = Cuisine.create(name: 'Arabe')
-    recType = RecipeType.create(name: 'Entrada')
+    #
+    # user = User.create(email:'aaa@email.com', password:'123456')
+    # cuisine = Cuisine.create(name: 'Arabe')
+    # recType = RecipeType.create(name: 'Entrada')
+
+    user = create(:user)
+    cuisine = create(:cuisine)
+    recType = create(:recipe_type)
 
     visit root_path
     click_on 'Entrar'
 
     fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
+    fill_in 'Senha', with: user.password
     within('div.actions') do
       click_on 'Entrar'
     end
+
     expect(page).to have_content("Bem Vindo #{user.email}")
 
     click_on 'Enviar uma receita'
@@ -37,6 +43,7 @@ feature 'logged user create recipe' do
     expect(page).to have_css('p', text: 'Trigo para quibe, cebola, tomate picado, azeite, salsinha')
     expect(page).to have_css('h3', text: 'Como Preparar')
     expect(page).to have_css('p', text:  'Misturar tudo e servir. Adicione limão a gosto.')
+
 
     expect(page).to have_content("Enviado por #{user.email}")
 

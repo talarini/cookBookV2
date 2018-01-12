@@ -3,18 +3,21 @@ require 'rails_helper'
 feature 'User update recipe' do
   scenario 'successfully' do
     #cria os dados necessários
-    arabian_cuisine = Cuisine.create(name: 'Arabe')
-    brazilian_cuisine = Cuisine.create(name: 'Brasileira')
+    user = create(:user)
 
-    appetizer_type = RecipeType.create(name: 'Entrada')
-    main_type = RecipeType.create(name: 'Prato Principal')
-    dessert_type = RecipeType.create(name: 'Sobremesa')
+    arabian_cuisine = create(:cuisine)
+    brazilian_cuisine = create(:cuisine, name:'Brasileira')
+
+    appetizer_type = create(:recipe_type)
+    main_type = create(:recipe_type, name: 'Prato Principal')
+    dessert_type = create(:recipe_type, name: 'Sobremesa')
 
     recipe = Recipe.create(title: 'Bolodecenoura', recipe_type: main_type,
                           cuisine: arabian_cuisine, difficulty: 'Médio',
                           cook_time: 50,
                           ingredients: 'Farinha, açucar, cenoura',
-                          method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+                          method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                          user: user)
 
     # simula a ação do usuário
     visit root_path
@@ -43,19 +46,22 @@ feature 'User update recipe' do
 
   scenario 'and all fields must be filled' do
     #cria os dados necessários, nesse caso não vamos criar dados no banco
-    arabian_cuisine = Cuisine.create(name: 'Arabe')
-    brazilian_cuisine = Cuisine.create(name: 'Brasileira')
+    #cria os dados necessários
+    user = create(:user)
 
-    appetizer_type = RecipeType.create(name: 'Entrada')
-    main_type = RecipeType.create(name: 'Prato Principal')
-    dessert_type = RecipeType.create(name: 'Sobremesa')
+    arabian_cuisine = create(:cuisine)
+    brazilian_cuisine = create(:cuisine, name:'Brasileira')
+
+    appetizer_type = create(:recipe_type)
+    main_type = create(:recipe_type, name: 'Prato Principal')
+    dessert_type = create(:recipe_type, name: 'Sobremesa')
 
     recipe = Recipe.create(title: 'Bolodecenoura', recipe_type: main_type,
                           cuisine: arabian_cuisine, difficulty: 'Médio',
                           cook_time: 50,
                           ingredients: 'Farinha, açucar, cenoura',
-                          method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
-
+                          method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                          user: user)
     # simula a ação do usuário
     visit root_path
     click_on 'Bolodecenoura'

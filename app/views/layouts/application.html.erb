@@ -19,6 +19,15 @@
     </nav>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+
+    <%= form_tag("recipes/search", method: "get") do %>
+    	<div class="form-group">
+    		<%= label_tag :search, "Busca"  %>
+    		<%= text_field_tag :search %>
+    		<%= submit_tag "Buscar" %>
+    	</div>
+    <% end %>
+    
     <%= yield %>
   </body>
   </html>
