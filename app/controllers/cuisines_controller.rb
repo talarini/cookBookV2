@@ -13,7 +13,7 @@ class CuisinesController <ApplicationController
     if @cuisine.save
       redirect_to cuisine_path(@cuisine)
     else
-      flash.now[:error] = 'Você deve informar o nome da cozinha'
+      flash.now[:alert] = 'Você deve informar o nome da cozinha'
       render 'new'
     end
   end

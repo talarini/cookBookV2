@@ -11,5 +11,10 @@
 <h3>Como Preparar</h3>
 <p><%= @recipes.method %></p>
 
-<%= link_to "Editar", edit_recipe_path(@recipes) %>
+<%= link_to "Editar", edit_recipe_path(@recipes)%>
+
+<%= form_tag(recipe_path(@recipes), method: 'DELETE') do %>
+<%= submit_tag "Remover Receita", data: {confirm: 'Deseja remover esta receita?'} %>
+<%end%>
+
 <%= link_to "Voltar", root_path %>

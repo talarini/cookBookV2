@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
 
-  before_action :get_recipes, only: [:edit, :update]
+  before_action :get_recipes, only: [:edit, :update, :destroy]
   before_action :get_params, only: [:show, :create, :update, :new]
 
   def show
@@ -16,7 +16,7 @@ class RecipesController < ApplicationController
     if @recipe.save
       redirect_to @recipe
     else
-      flash.now[:error] = 'Você deve informar todos os dados da receita'
+      flash.now[:alert] = 'Você deve informar todos os dados da receita'
       render :new
     end
   end
@@ -29,13 +29,18 @@ class RecipesController < ApplicationController
     if @recipe.save
       redirect_to recipe_path(@recipe)
     else
-      flash.now[:error] = 'Você deve informar todos os dados da receita'
+      flash.now[:alert] = 'Você deve informar todos os dados da receita'
       render :new
     end
   end
 
   def search
     @recipes = Recipe.where "title like ?", params[:search]
+  end
+
+  def destroy
+    @recipe.destroy
+    redirect_to root_path
   end
 
   private
