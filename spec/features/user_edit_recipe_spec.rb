@@ -4,6 +4,7 @@ feature 'User update recipe' do
   scenario 'successfully' do
     #cria os dados necessários
     user = create(:user)
+    sign_in user
 
     arabian_cuisine = create(:cuisine)
     brazilian_cuisine = create(:cuisine, name:'Brasileira')
@@ -48,6 +49,7 @@ feature 'User update recipe' do
     #cria os dados necessários, nesse caso não vamos criar dados no banco
     #cria os dados necessários
     user = create(:user)
+    sign_in user
 
     arabian_cuisine = create(:cuisine)
     brazilian_cuisine = create(:cuisine, name:'Brasileira')
