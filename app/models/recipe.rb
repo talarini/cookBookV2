@@ -5,4 +5,6 @@ class Recipe < ApplicationRecord
 
   validates :title, :difficulty, :cook_time, :ingredients, :method, presence: true
 
+  
+
 end

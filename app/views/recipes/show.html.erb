@@ -14,12 +14,13 @@
 <h3>Enviado por</h3>
 <p><%= @recipe.user.email %>
 
+
 <%if user_signed_in? && current_user.email == @recipe.user.email %>
 <%= link_to "Editar", edit_recipe_path(@recipe)%>
 <%end%>
 
 <%= form_tag(recipe_path(@recipe), method: 'DELETE') do %>
   <%= submit_tag "Remover Receita", data: {confirm: 'Deseja remover esta receita?'} %>
-  <%end%>
+<%end%>
 
   <%= link_to "Voltar", root_path %>

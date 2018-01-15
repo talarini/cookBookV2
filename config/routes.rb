@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   resources :cuisines, only: [:show, :new, :create]
   resources :recipe_types, only: [:show, :new, :create]
 
+  resources :favorites , only: [:create] 
+
+
 end

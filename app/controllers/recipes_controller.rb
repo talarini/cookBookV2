@@ -51,19 +51,33 @@ class RecipesController < ApplicationController
     redirect_to root_path
   end
 
+  def favorite
+
+   @favorite = Favorite.new(user: current_user, recipe: @recipe)
+
+   if @favorite.save
+     flash[:notice] = 'Receita favoritada'
+     redirect_to recipe_path(id: @recipe.id)
+   else
+     flash[:error] = 'Erro ao favoritar receita'
+     redirect_to root_path
+   end
+end
+
+
   private
 
   def recipe_params
     params.require(:recipe).permit(:title, :recipe_type_id, :cuisine_id,
       :difficulty, :cook_time, :ingredients, :method, :user)
-    end
-
-    def get_recipes
-      @recipe = Recipe.find(params[:id])
-    end
-
-    def get_params
-      @cuisines = Cuisine.all
-      @recipe_types = RecipeType.all
-    end
   end
+
+  def get_recipes
+    @recipe = Recipe.find(params[:id])
+  end
+
+  def get_params
+    @cuisines = Cuisine.all
+    @recipe_types = RecipeType.all
+  end
+end

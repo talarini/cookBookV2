@@ -37,6 +37,8 @@ feature 'Visitor register recipe' do
 
   scenario 'and must fill in all fields' do
     #cria os dados necessários, nesse caso não vamos criar dados no banco
+    user = create (:user)
+    sign_in user
     cuisine = create(:cuisine)
     # simula a ação do usuário
     visit root_path
