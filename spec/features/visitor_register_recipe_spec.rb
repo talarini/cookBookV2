@@ -2,20 +2,18 @@ require 'rails_helper'
 
 feature 'Visitor register recipe' do
   scenario 'successfully' do
-    #cria os dados necessários
-    user = create (:user)
+    #cria os dados necessários, nesse caso não vamos criar dados no banco
+    user = create(:user)
     sign_in user
-    cuisine = create(:cuisine, name: 'Arabe')
-    entrada = create(:recipe_type , name: 'Entrada')
-    principal = create(:recipe_type , name: 'Prato Principal')
-    sobremessa = create(:recipe_type , name: 'Sobremesa')
+    Cuisine.create(name: 'Arabe')
+    RecipeType.create(name: 'Entrada')
     # simula a ação do usuário
     visit root_path
     click_on 'Enviar uma receita'
 
     fill_in 'Título', with: 'Tabule'
-    select 'Arabe', from: 'Cozinha'
     select 'Entrada', from: 'Tipo da Receita'
+    select 'Arabe', from: 'Cozinha'
     fill_in 'Dificuldade', with: 'Fácil'
     fill_in 'Tempo de Preparo', with: '45'
     fill_in 'Ingredientes', with: 'Trigo para quibe, cebola, tomate picado, azeite, salsinha'
@@ -37,9 +35,10 @@ feature 'Visitor register recipe' do
 
   scenario 'and must fill in all fields' do
     #cria os dados necessários, nesse caso não vamos criar dados no banco
-    user = create (:user)
+    user = create(:user)
     sign_in user
-    cuisine = create(:cuisine)
+
+    Cuisine.create(name: 'Arabe')
     # simula a ação do usuário
     visit root_path
     click_on 'Enviar uma receita'
@@ -54,4 +53,13 @@ feature 'Visitor register recipe' do
 
     expect(page).to have_content('Você deve informar todos os dados da receita')
   end
+
+  scenario 'must be signed in' do
+
+    visit root_path
+
+    expect(page).not_to have_link('Enviar uma receita')
+
+  end
+
 end

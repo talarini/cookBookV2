@@ -1,0 +1,9 @@
+<% @favorites.each do |favorite| %>
+  <h1><%= link_to(favorite.recipe.title, favorite.recipe) %></h1>
+  <ul>
+    <li><%= favorite.recipe.recipe_type.name %></li>
+    <li><%= favorite.recipe.cuisine.name %></li>
+    <li><%= favorite.recipe.difficulty %></li>
+    <li><%= favorite.recipe.cook_time %> minutos</li>
+  </ul>
+<% end %>

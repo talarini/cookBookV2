@@ -2,9 +2,10 @@ class RecipesController < ApplicationController
 
   before_action :get_recipes, only: [:edit, :update, :destroy, :show]
   before_action :get_params, only: [:show, :create, :update, :new]
-  before_action :authenticate_user! , only: [:edit]
+  before_action :authenticate_user! , only: [:edit,:favorites]
 
   def show
+    @favorited = Favorite.where(user: current_user, recipe: @recipe).empty?
   end
 
   def new
@@ -52,32 +53,35 @@ class RecipesController < ApplicationController
   end
 
   def favorite
+    @recipe = Recipe.find(params[:id])
+    @user = current_user
+    @favorite = Favorite.new(user: @user, recipe: @recipe)
+    if @favorite.save
+      flash[:notice] = 'Receita favoritada com sucesso'
+      render :show
+    else
+      flash.now[:error] = 'Erro ao favoritar a receita'
+      render :show
+    end
+  end
 
-   @favorite = Favorite.new(user: current_user, recipe: @recipe)
-
-   if @favorite.save
-     flash[:notice] = 'Receita favoritada'
-     redirect_to recipe_path(id: @recipe.id)
-   else
-     flash[:error] = 'Erro ao favoritar receita'
-     redirect_to root_path
-   end
-end
-
+  def favorites
+    @favorites = Favorite.where(user: current_user)
+  end
 
   private
 
   def recipe_params
     params.require(:recipe).permit(:title, :recipe_type_id, :cuisine_id,
       :difficulty, :cook_time, :ingredients, :method, :user)
-  end
+    end
 
-  def get_recipes
-    @recipe = Recipe.find(params[:id])
-  end
+    def get_recipes
+      @recipe = Recipe.find(params[:id])
+    end
 
-  def get_params
-    @cuisines = Cuisine.all
-    @recipe_types = RecipeType.all
+    def get_params
+      @cuisines = Cuisine.all
+      @recipe_types = RecipeType.all
+    end
   end
-end

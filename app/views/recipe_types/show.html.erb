@@ -2,12 +2,13 @@
 
  <% if @recipes.any? %>
 
-<%= @recipes.each do |recipe| %>
-<h1><%=recipe.title%>
+<% @recipes.each do |recipe| %>
+<h1><%=link_to recipe.title, recipe%></h1>
   <li><%=recipe.recipe_type.name%></li>
   <li><%=recipe.cuisine.name%></li>
   <li><%=recipe.difficulty%></li>
   <li><%=recipe.cook_time%> minutos</li>
+
 <%end%>
 <%else%>
 Nenhuma receita encontrada para este tipo de receitas

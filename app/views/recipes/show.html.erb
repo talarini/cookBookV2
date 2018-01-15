@@ -23,4 +23,13 @@
   <%= submit_tag "Remover Receita", data: {confirm: 'Deseja remover esta receita?'} %>
 <%end%>
 
+<% if user_signed_in?%>
+  <% if @favorited %>
+    <%= link_to 'Adicionar aos favoritos', favorite_recipe_path(@recipe), method: :post %>
+  <% else %>
+    <%= link_to 'Remover dos favoritos', destroy_favorite_recipe_path(@recipe), method: :delete %>
+  <% end %>
+<% end %>
+
+
   <%= link_to "Voltar", root_path %>

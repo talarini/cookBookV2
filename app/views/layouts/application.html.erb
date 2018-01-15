@@ -16,6 +16,9 @@
     <%else%>
       <%= link_to 'Entrar', new_user_session_path %>
     <%end%>
+    <%if user_signed_in? %>
+      <span><%= link_to "Minhas Receitas Favoritas",  favorites_recipes_path %> </span>
+    <%end%>
     </nav>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
@@ -27,7 +30,7 @@
     		<%= submit_tag "Buscar" %>
     	</div>
     <% end %>
-    
+
     <%= yield %>
   </body>
   </html>
