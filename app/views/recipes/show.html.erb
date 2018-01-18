@@ -15,21 +15,17 @@
 <p><%= @recipe.user.email %>
 
 
-<%if user_signed_in? && current_user.email == @recipe.user.email %>
-<%= link_to "Editar", edit_recipe_path(@recipe)%>
-<%end%>
-
-<%= form_tag(recipe_path(@recipe), method: 'DELETE') do %>
-  <%= submit_tag "Remover Receita", data: {confirm: 'Deseja remover esta receita?'} %>
-<%end%>
-
 <% if user_signed_in?%>
-  <% if @favorited %>
-    <%= link_to 'Adicionar aos favoritos', favorite_recipe_path(@recipe), method: :post %>
-  <% else %>
+  <% if current_user.my_recipe? @recipe %>
+    <%= link_to 'Editar', edit_recipe_path(@recipe) %>
+    <%= link_to 'Remover Receita', recipe_path(@recipe), method: :delete %>
+  <%end%>
+
+  <% if current_user.favorited? @recipe %>
     <%= link_to 'Remover dos favoritos', destroy_favorite_recipe_path(@recipe), method: :delete %>
+  <% else %>
+    <%= link_to 'Adicionar aos favoritos', favorite_recipe_path(@recipe), method: :post %>
   <% end %>
 <% end %>
 
-
-  <%= link_to "Voltar", root_path %>
+<%= link_to "Voltar", root_path %>

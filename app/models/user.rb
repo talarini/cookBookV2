@@ -5,7 +5,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :recipes
+  has_many :favorites , dependent: :destroy
+  has_many :favorite_recipes , through: :favorites , source: :recipe
 
 
+  def favorited? recipe
+    favorite_recipes.include? recipe
+  end
+
+  def my_recipe? recipe
+    recipes.include? recipe
+  end
 
 end

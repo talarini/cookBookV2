@@ -1,12 +1,6 @@
 <h1>CookBook</h1>
 <p>Bem-vindo ao maior livro de receitas online</p>
 
-<% if user_signed_in? %>
-<%= link_to('Enviar uma receita', new_recipe_path) %>
-<%else%>
-<p> Faça LogIn para enviar uma receita </p>
-<%end%>
-
 <% @cuisines.each do |cuisine| %>
 <%= link_to cuisine.name, cuisine_path(cuisine.id)%>
 <%end%>
@@ -15,11 +9,15 @@
 <%= link_to recipe_type.name, recipe_type_path(recipe_type.id)%>
 <%end%>
 
-<% @recipes.each do |recipe| %>
-<h1><%= link_to recipe.title, recipe_path(recipe.id)%></h1>
-<li><%= recipe.recipe_type.name %></li>
-<li><%= recipe.cuisine.name %></li>
-<li><%= recipe.difficulty %></li>
-<li><%= recipe.cook_time %> minutos</li>
 
+<h2> Ultimas receitas cadastradas </h2>
+<% @last_recipes.each do |recipe| %>
+  <div class = "recipes">
+    <h1><%= link_to recipe.title, recipe_path(recipe.id)%></h1>
+    <li><%= recipe.recipe_type.name %></li>
+    <li><%= recipe.cuisine.name %></li>
+    <li><%= recipe.difficulty %></li>
+    <li><%= recipe.cook_time %> minutos</li>
+  </div>
 <% end %>
+<%= link_to 'Visualizar todas receitas', recipes_path %>

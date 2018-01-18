@@ -1,11 +1,14 @@
 class RecipesController < ApplicationController
 
-  before_action :get_recipes, only: [:edit, :update, :destroy, :show]
-  before_action :get_params, only: [:show, :create, :update, :new]
-  before_action :authenticate_user! , only: [:edit,:favorites]
+  before_action :get_recipes, only: [:edit, :update, :destroy, :show , :favorite, :destroy_favorite]
+  before_action :get_types, only: [:show, :create, :update, :new]
+  before_action :authenticate_user! , only: [:edit,:favorites, :create]
+
+  def index
+    @recipes = Recipe.all
+  end
 
   def show
-    @favorited = Favorite.where(user: current_user, recipe: @recipe).empty?
   end
 
   def new
@@ -14,9 +17,11 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.create(recipe_params)
-    @recipe.user_id = current_user.id if current_user
+    @recipe.user = current_user
+
     if @recipe.save
       redirect_to @recipe
+      flash.now[:notice] = 'Receita cadastrada coom sucesso'
     else
       flash.now[:alert] = 'Você deve informar todos os dados da receita'
       render :new
@@ -24,19 +29,21 @@ class RecipesController < ApplicationController
   end
 
   def edit
+    if current_user.my_recipe? @recipe
+      @cuisines = Cuisine.all
+      @recipe_types = RecipeType.all
+    else
+      redirect_to root_path
+    end
   end
 
   def update
-    if @recipe.user_id == current_user.id
-      @recipe.update(recipe_params)
-      if @recipe.save
-        redirect_to recipe_path(@recipe)
-      else
-        flash.now[:alert] = 'Você deve informar todos os dados da receita'
-        render :new
-      end
+    @recipe.update(recipe_params)
+    if @recipe.save
+      flash.now[:notice] = 'Receita atualizada com sucesso'
+      redirect_to recipe_path(@recipe)
     else
-      flash.now[:alert] = 'Operação NEGADA - Voce não é dono desta receita'
+      flash.now[:alert] = 'Você deve informar todos os dados da receita'
       render :new
     end
   end
@@ -44,20 +51,23 @@ class RecipesController < ApplicationController
   def search
     @search = params[:search]
     @recipes = Recipe.where("title LIKE ? or ingredients LIKE ?", "%#{@search}%" ,"%#{@search}%" )
-    flash.now[:alert] = 'Nenhuma receita encontrada' unless @recipes.any?
+    flash.now[:error] = 'Nenhuma receita encontrada' unless @recipes.any?
   end
 
   def destroy
-    @recipe.destroy
-    redirect_to root_path
+    if @recipe.destroy
+      flash[:notice] = 'Receita removida com sucesso'
+      redirect_to root_path
+    else
+      flash[:error] = 'Algo deu errado, tente novamente'
+      redirect_to root_path
+    end
   end
 
   def favorite
-    @recipe = Recipe.find(params[:id])
-    @user = current_user
-    @favorite = Favorite.new(user: @user, recipe: @recipe)
+    @favorite = Favorite.new(user: current_user, recipe: @recipe)
     if @favorite.save
-      flash[:notice] = 'Receita favoritada com sucesso'
+      flash.now[:notice] = 'Receita favoritada com sucesso'
       render :show
     else
       flash.now[:error] = 'Erro ao favoritar a receita'
@@ -67,6 +77,17 @@ class RecipesController < ApplicationController
 
   def favorites
     @favorites = Favorite.where(user: current_user)
+  end
+
+  def destroy_favorite
+    @favorite = Favorite.find_by(user: current_user, recipe: @recipe)
+    if @favorite.destroy
+      flash[:notice] = 'Receita removida dos favoritos'
+      redirect_to @recipe
+    else
+      flash[:error] = 'Algo deu errado, tente novamente'
+      redirect_to @recipe
+    end
   end
 
   private
@@ -80,7 +101,7 @@ class RecipesController < ApplicationController
       @recipe = Recipe.find(params[:id])
     end
 
-    def get_params
+    def get_types
       @cuisines = Cuisine.all
       @recipe_types = RecipeType.all
     end

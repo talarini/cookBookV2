@@ -1,14 +1,15 @@
 require 'rails_helper'
+
   feature 'user favorite recipe'do
     scenario 'successfully' do
 
       user = create(:user)
       another_user = create(:user, email:'anotheremail@email.com')
-      cuisine = create(:cuisine, name:'Italiana')
-      recipe_type = create(:recipe_type, name:'Tailandesa')
+      cuisine = create(:cuisine, name:'Portuguesa')
+      recipe_type = create(:recipe_type, name:'petisco')
 
       recipe = create(:recipe, user:user)
-      another_recipe = create(:recipe, title:'sopa', user:user, cuisine:cuisine, recipe_type:recipe_type)
+      another_recipe = create(:recipe, title:'sopa', user:user, cuisine:cuisine, recipe_type: recipe_type)
 
       visit root_path
       sign_in another_user
@@ -24,7 +25,7 @@ require 'rails_helper'
 
     scenario 'already favorited' do
       user = create(:user)
-      another_user = create(:user, email:'123@email.com')
+      another_user = create(:user, email:'anotheremail@email.com')
       recipe = create(:recipe, user:user)
       Favorite.create(user: user, recipe: recipe)
 
@@ -36,5 +37,56 @@ require 'rails_helper'
 
       expect(page).not_to have_link('Adicionar aos favoritos')
       expect(page).to have_link('Remover dos favoritos')
+    end
+
+    scenario 'user unfavorite recipe' do
+      user = create(:user)
+      recipe = create(:recipe, user:user)
+      Favorite.create(user: user, recipe: recipe)
+
+      sign_in user
+
+      visit root_path
+      click_on recipe.title
+
+      click_on 'Remover dos favoritos'
+
+      expect(page).to have_content('Receita removida dos favoritos')
+
+      expect(page).not_to have_link('Remover dos favoritos')
+      expect(page).to have_link('Adicionar aos favoritos')
+    end
+
+    scenario 'another user favorite recipe' do
+      user = create(:user)
+      another_user = create(:user, email:'anotheremail@email.com')
+      recipe = create(:recipe, user:user)
+      Favorite.create(user: user, recipe:recipe)
+
+      sign_in another_user
+      visit root_path
+
+      click_on recipe.title
+
+      expect(page).to have_link('Adicionar aos favoritos')
+      expect(page).not_to have_link('Remover dos favoritos')
+    end
+
+    scenario 'user favorites more than one recipe' do
+      user = create(:user)
+      recipe = create(:recipe, user:user)
+      cuisine = create(:cuisine, name:'contemporanea')
+      recipe_type = create(:recipe_type, name: 'petisco')
+      another_recipe = create(:recipe, title: 'sopa', cuisine: cuisine, recipe_type: recipe_type, user: user)
+      Favorite.create(user: user, recipe:recipe)
+
+      sign_in user
+      visit root_path
+
+      click_on another_recipe.title
+
+      expect(page).to have_link('Adicionar aos favoritos')
+      expect(page).not_to have_link('Remover dos favoritos')
+
     end
   end
