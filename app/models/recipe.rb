@@ -4,7 +4,13 @@ class Recipe < ApplicationRecord
   belongs_to :user
   has_many :favorites , dependent: :destroy
 
+  has_attached_file :image , styles: { small: "64x64", med: "100x100", large: "500x300" }
+  validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+
   validates :title, :difficulty, :cook_time, :ingredients, :method, presence: true
+
+
+
 
 
 
