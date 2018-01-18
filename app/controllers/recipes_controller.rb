@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
 
-  before_action :get_recipes, only: [:edit, :update, :destroy, :show , :favorite, :destroy_favorite]
+  before_action :get_recipes, only: [:edit, :update, :destroy, :show , :favorite, :destroy_favorite, :share]
   before_action :get_types, only: [:show, :create, :update, :new]
   before_action :authenticate_user! , only: [:edit,:favorites, :create]
 
@@ -88,6 +88,15 @@ class RecipesController < ApplicationController
       flash[:error] = 'Algo deu errado, tente novamente'
       redirect_to @recipe
     end
+  end
+
+  def share
+    email = params[:email]
+    msg = params[:message]
+
+    RecipesMailer.share(email,msg,@recipe.id).deliver_now
+    flash[:notice] = "Receita compartilhada com #{email}"
+    redirect_to @recipe
   end
 
   private

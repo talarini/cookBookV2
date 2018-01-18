@@ -28,4 +28,13 @@
   <% end %>
 <% end %>
 
+<h4>Compartilhar receita</h4>
+<%= form_tag(share_recipe_path, method: :post) do  %>
+  <%= label_tag :email, 'Email' %>
+  <%= text_field_tag :email %>
+  <%= label_tag :message, 'Mensagem' %>
+  <%= text_area_tag :message %>
+  <%= submit_tag 'Enviar' %>
+<% end %>
+
 <%= link_to "Voltar", root_path %>

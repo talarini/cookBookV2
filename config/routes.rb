@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     member do
       post 'favorite'
       delete 'destroy_favorite'
+      post 'share'
     end
   end
 
