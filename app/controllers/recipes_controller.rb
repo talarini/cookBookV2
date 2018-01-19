@@ -20,8 +20,8 @@ class RecipesController < ApplicationController
     @recipe.user = current_user
 
     if @recipe.save
+      flash[:notice] = 'Receita cadastrada com sucesso'
       redirect_to @recipe
-      flash.now[:notice] = 'Receita cadastrada coom sucesso'
     else
       flash.now[:alert] = 'Você deve informar todos os dados da receita'
       render :new
@@ -40,8 +40,8 @@ class RecipesController < ApplicationController
   def update
     @recipe.update(recipe_params)
     if @recipe.save
-      flash.now[:notice] = 'Receita atualizada com sucesso'
-      redirect_to recipe_path(@recipe)
+      flash[:notice] = 'Receita atualizada com sucesso'
+      redirect_to @recipe
     else
       flash.now[:alert] = 'Você deve informar todos os dados da receita'
       render :new
@@ -85,8 +85,8 @@ class RecipesController < ApplicationController
       flash[:notice] = 'Receita removida dos favoritos'
       redirect_to @recipe
     else
-      flash[:error] = 'Algo deu errado, tente novamente'
-      redirect_to @recipe
+      flash.now[:error] = 'Algo deu errado, tente novamente'
+      render :show
     end
   end
 

@@ -1,0 +1,41 @@
+<div class="form-group">
+  <%= form_for (@recipe), html: {multipart: true} do |f| %>
+    <div>
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+    <div>
+      <%= f.label :recipe_type_id %>
+      <%= f.collection_select(:recipe_type_id, @recipe_types, :id, :name, include_blank: 'Selecione' )%>
+    </div>
+    <div>
+      <%= f.label :cuisine_id %>
+      <%= f.collection_select(:cuisine_id, @cuisines, :id, :name, include_blank: 'Selecione')%>
+    </div>
+    <div>
+      <%= f.label :difficulty %>
+      <!-- <%= f.select(:difficulty, options_for_select([['Fácil', 'Fácil'], ['Medio', 'Medio'], ['Dificil', 'Difícil']]))%> -->
+      <%= f.text_field :difficulty %>
+    </div>
+    <div>
+      <%= f.label :cook_time %>
+      <%= f.number_field :cook_time %>
+    </div>
+    <div>
+      <%= f.label :ingredients %>
+      <%= f.text_area :ingredients %>
+    </div>
+    <div>
+      <%= f.label :method %>
+      <%= f.text_area :method %>
+    </div>
+    <div>
+      <%= f.label :image ,'Foto do Prato'%>
+      <%= f.file_field :image %>
+    </div>
+    <div>
+      <%= f.submit 'Enviar'%>
+    </div>
+
+  <% end %>
+</div>

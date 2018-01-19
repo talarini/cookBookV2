@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>CookbookEstudo</title>
-  <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-</head>
-
-<body>
-  <nav>
-    <%if user_signed_in? %>
+  <head>
+    <title>CookbookEstudo</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <nav>
+      <%if user_signed_in? %>
       <span> Bem Vindo <%= current_user.email %> </span>
       <span><%= link_to'Sair', destroy_user_session_path, method: :delete %>  </span>
       <span><%= link_to "Minhas Receitas Favoritas",  favorites_recipes_path %> </span>
       <span><%= link_to 'Enviar uma receita', new_recipe_path  %> </span>
-    <%else%>
+      <%else%>
       <p> Faça Login para enviar uma receita </p>
       <span><%= link_to 'Entrar', new_user_session_path %></span>
-    <%end%>
-  </nav>
+      <%end%>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <p class="error"><%= flash[:error] %></p>
-
-    <%= form_tag("recipes/search", method: "get") do %>
-    	<div class="form-group">
-    		<%= label_tag :search, "Busca"  %>
-    		<%= text_field_tag :search %>
-    		<%= submit_tag "Buscar" %>
-    	</div>
-    <% end %>
-
-    <%= yield %>
+      <%= form_tag("recipes/search", method: "get") do %>
+      <div class="form-group">
+        <%= label_tag :search, "Busca"  %>
+        <%= text_field_tag :search %>
+        <%= submit_tag "Buscar" %>
+      </div>
+      <% end %>
+    </nav>
+    <main>
+      <p class="notice"><%= notice %></p>
+      <p class"success"><%= flash[:success] %></p>
+      <p class="alert"><%= alert %></p>
+      <p class="error"><%= flash[:error] %></p>
+      <%= yield %>
+    </main>
+    <aside>
+      <%= yield :aside %>
+    </aside>
   </body>
-  </html>
+</html>

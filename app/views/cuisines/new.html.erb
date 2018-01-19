@@ -1,8 +1,7 @@
 <%= form_for @cuisine do |f| %>
 
-<%=f.label :name , 'Nome' %>
-<%=f.text_field :name %>
-
-<%= f.submit 'Enviar' %>
+  <%=f.label :name %>
+  <%=f.text_field :name %>
+  <%= f.submit 'Enviar'%>
 
 <%end%>

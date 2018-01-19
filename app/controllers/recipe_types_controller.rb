@@ -2,7 +2,6 @@ class RecipeTypesController <ApplicationController
 
   def show
     @recipe_types = RecipeType.find(params[:id])
-    @recipes = Recipe.where(recipe_type_id: params[:id])
   end
 
   def new
@@ -12,10 +11,11 @@ class RecipeTypesController <ApplicationController
   def create
     @recipe_type = RecipeType.create(recipe_type_params)
     if @recipe_type.save
-      redirect_to recipe_type_path(@recipe_type)
+      flash[:success] = 'Tipo de cozinha cadastrado com sucesso'
+      redirect_to @recipe_type
     else
       flash.now[:alert] = 'Você deve informar o nome do tipo de receita'
-      render 'new'
+      render :new
     end
   end
 

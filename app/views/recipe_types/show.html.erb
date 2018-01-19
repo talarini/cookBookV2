@@ -1,15 +1,15 @@
-<h1><%=@recipe_types.name%>
+<h1> Tipo de receita: <%= @recipe_types.name %></h1>
 
- <% if @recipes.any? %>
+<% if @recipe_types.recipes.empty?  %>
+<h2>Nenhuma receita encontrada para este tipo de receitas</h2>
+<% end %>
 
-<% @recipes.each do |recipe| %>
-<h1><%=link_to recipe.title, recipe%></h1>
-  <li><%=recipe.recipe_type.name%></li>
-  <li><%=recipe.cuisine.name%></li>
-  <li><%=recipe.difficulty%></li>
-  <li><%=recipe.cook_time%> minutos</li>
-
-<%end%>
-<%else%>
-Nenhuma receita encontrada para este tipo de receitas
-<%end%>
+<% @recipe_types.recipes.each do |recipe| %>
+<h1><%= link_to recipe.title , recipe %></h1>
+<ul>
+  <li> <%= recipe.recipe_type.name%></li>
+  <li> <%= recipe.cuisine.name %></li>
+  <li> <%= recipe.difficulty %></li>
+  <li> <%= recipe.cook_time %> <%= I18n.t :minutes %></li>
+</ul>
+<% end %>

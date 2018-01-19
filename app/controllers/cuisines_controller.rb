@@ -1,4 +1,5 @@
 class CuisinesController <ApplicationController
+
   def show
     @cuisine = Cuisine.find(params[:id])
   end
@@ -10,6 +11,7 @@ class CuisinesController <ApplicationController
   def create
     @cuisine = Cuisine.create(cuisine_params)
     if @cuisine.save
+      flash[:success] = 'Cozinha cadastrada com sucesso'
       redirect_to @cuisine
     else
       flash.now[:alert] = 'Você deve informar o nome da cozinha'
