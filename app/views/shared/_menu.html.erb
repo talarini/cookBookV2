@@ -1,0 +1,17 @@
+<%if user_signed_in? %>
+<span> Bem Vindo <%= current_user.email %> </span>
+<span><%= link_to'Sair', destroy_user_session_path, method: :delete %>  </span>
+<span><%= link_to "Minhas Receitas Favoritas",  favorites_recipes_path %> </span>
+<span><%= link_to 'Enviar uma receita', new_recipe_path  %> </span>
+<%else%>
+<p> Faça Login para enviar uma receita </p>
+<span><%= link_to 'Entrar', new_user_session_path %></span>
+<%end%>
+
+<%= form_tag("recipes/search", method: "get") do %>
+<div class="form-group">
+  <%= label_tag :search, "Busca"  %>
+  <%= text_field_tag :search %>
+  <%= submit_tag "Buscar" %>
+</div>
+<% end %>
