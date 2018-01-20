@@ -1,7 +1,8 @@
-<% if @recipe.featured? %>
-  <%= render 'featured' %>
-<%else%>
-<h1><%= @recipe.title %></h1>
+<div class='featured'>
+  <img> <%= image_tag '/app/assets/images/star.png'%></img>
+  <h1> <%= @recipe.title %></h1>
+</div>
+
   <img> <%= image_tag @recipe.image.url(:large)%></img>
 <h3>Detalhes</h3>
   <p><%= I18n.t :recipe_type_id %>: <%= @recipe.recipe_type.name %></p>
@@ -39,4 +40,3 @@
 <% end %>
 
 <%= link_to "Voltar", root_path %>
-<%end%>
