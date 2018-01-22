@@ -4,41 +4,39 @@
     <p>Bem-vindo ao maior livro de receitas online</p>
   </head>
     <body>
-      <div id="main-container" class="container-fluid">
-        <div class="row">
-          <div id="sidebar" class="col-xs-3">
-            <h3>Cozinhas</h3>
-              <ul>
-                <% @cuisines.each do |cuisine| %>
-                  <li><%= link_to cuisine.name, cuisine_path(cuisine.id)%></li>
-                <%end%>
-              </ul>
-            <h3>Tipo de Receita</h3>
-              <ul>
-              <% @recipe_types.each do |recipe_type| %>
-                <li><%= link_to recipe_type.name, recipe_type_path(recipe_type.id)%></li>
+      <div class="row">
+        <div id="sidebar" class="col-xs-3">
+          <h3>Cozinhas</h3>
+            <ul>
+              <% @cuisines.each do |cuisine| %>
+                <li><%= link_to cuisine.name, cuisine_path(cuisine.id)%></li>
               <%end%>
-              </ul>
-          </div>
-          <div id="main-content" class="col-xs-9">
-            <h3> Ultimas receitas cadastradas </h3>
-              <div class = "last_recipes">
-              <% @last_recipes.each do |recipe| %>
-                <div class = "recipes">
-                  <%= render recipe %>
-                </div>
+            </ul>
+            <h3>Tipo de Receita</h3>
+            <ul>
+            <% @recipe_types.each do |recipe_type| %>
+              <li><%= link_to recipe_type.name, recipe_type_path(recipe_type.id)%></li>
+            <%end%>
+            </ul>
+        </div>
+        <div class="col-xs-9">
+          <h3> Ultimas receitas cadastradas </h3>
+            <div class = "last_recipes">
+            <% @last_recipes.each do |recipe| %>
+              <div class = "recipes">
+                <%= render recipe %>
+              </div>
+            <% end %>
+            </div>
+          <h3>Receitas mais favoritadas</h3>
+            <div class = "most_favorited">
+              <% @favorites.each do |recipe| %>
+              <div class = "favorited_recipes">
+                <%= render recipe %>
+              </div>
               <% end %>
-              </div>
-            <h3>Receitas mais favoritadas</h3>
-              <div class = "most_favorited">
-                <% @favorites.each do |recipe| %>
-                <div class = "favorited_recipes">
-                  <%= render recipe %>
-                </div>
-                <% end %>
-              </div>
-            <%= link_to 'Visualizar todas receitas', recipes_path %>
-          </div>
+            </div>
+          <%= link_to 'Visualizar todas receitas', recipes_path %>
         </div>
       </div>
     </body>

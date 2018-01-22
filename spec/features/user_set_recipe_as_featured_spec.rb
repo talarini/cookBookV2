@@ -21,6 +21,6 @@ require 'rails_helper'
 
       click_on 'Enviar'
 
-      expect(page).to have_css("img[src*='star.png']")
+      expect(page).to have_css('figure.featured')
     end
   end

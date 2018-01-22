@@ -1,42 +1,49 @@
-<% if @recipe.featured? %>
-  <%= render 'featured' %>
-<%else%>
-<h1><%= @recipe.title %></h1>
-  <img> <%= image_tag @recipe.image.url(:large)%></img>
-<h3>Detalhes</h3>
-  <p><%= I18n.t :recipe_type_id %>: <%= @recipe.recipe_type.name %></p>
-  <p><%= I18n.t :cuisine_id %>: <%= @recipe.cuisine.name %></p>
-  <p><%= I18n.t :difficulty %>: <%= @recipe.difficulty %></p>
-  <p><%= I18n.t :cook_time %>: <%= @recipe.cook_time %> minutos</p>
-<h3><%= I18n.t :ingredients %></h3>
-  <p><%= @recipe.ingredients %></p>
-<h3><%= I18n.t :method %></h3>
-  <p><%= @recipe.method %></p>
-<h3><%= I18n.t :sent_by %></h3>
-  <p><%= @recipe.user.email %></p>
-  <p><%= @recipe.featured? %></p>
-<div>
-<% if user_signed_in?%>
-  <% if current_user.my_recipe? @recipe %>
-    <%= link_to 'Editar', edit_recipe_path(@recipe) %>
-    <%= link_to 'Remover Receita', recipe_path(@recipe), method: :delete %>
-  <%end%>
+<div class = "container-fluid">
+  <div class = "row">
+    <div class = "col-md-12">
+      <h1><%= @recipe.title %></h1>
+      <% if @recipe.featured? %>
+      <figure class = "featured">
+        <%= image_tag ('star.png'), alt:'featured', size: '20'%>
+      </figure>
+      <%end%>
+      <img> <%= image_tag @recipe.image.url(:large)%></img>
+      <h3>Detalhes</h3>
+      <p><%= I18n.t :recipe_type_id %>: <%= @recipe.recipe_type.name %></p>
+      <p><%= I18n.t :cuisine_id %>: <%= @recipe.cuisine.name %></p>
+      <p><%= I18n.t :difficulty %>: <%= @recipe.difficulty %></p>
+      <p><%= I18n.t :cook_time %>: <%= @recipe.cook_time %> minutos</p>
+      <h3><%= I18n.t :ingredients %></h3>
+      <p><%= @recipe.ingredients %></p>
+      <h3><%= I18n.t :method %></h3>
+      <p><%= @recipe.method %></p>
+      <h3><%= I18n.t :sent_by %></h3>
+      <p><%= @recipe.user.email %></p>
+      <p><%= @recipe.featured? %></p>
+      <div>
+        <% if user_signed_in?%>
+        <% if current_user.my_recipe? @recipe %>
+        <%= link_to 'Editar', edit_recipe_path(@recipe) %>
+        <%= link_to 'Remover Receita', recipe_path(@recipe), method: :delete %>
+        <%end%>
 
-  <% if current_user.favorited? @recipe %>
-    <%= link_to 'Remover dos favoritos', destroy_favorite_recipe_path(@recipe), method: :delete %>
-  <% else %>
-    <%= link_to 'Adicionar aos favoritos', favorite_recipe_path(@recipe), method: :post %>
-  <% end %>
-<% end %>
+        <% if current_user.favorited? @recipe %>
+        <%= link_to 'Remover dos favoritos', destroy_favorite_recipe_path(@recipe), method: :delete %>
+        <% else %>
+        <%= link_to 'Adicionar aos favoritos', favorite_recipe_path(@recipe), method: :post %>
+        <% end %>
+        <% end %>
+      </div>
+      <h4>Compartilhar receita</h4>
+      <%= form_tag(share_recipe_path, method: :post) do  %>
+      <%= label_tag :email, 'Email' %>
+      <%= text_field_tag :email %>
+      <%= label_tag :message, 'Mensagem' %>
+      <%= text_area_tag :message %>
+      <%= submit_tag 'Enviar' %>
+      <% end %>
+
+      <%= link_to "Voltar", root_path %>
+    </div>
+  </div>
 </div>
-<h4>Compartilhar receita</h4>
-<%= form_tag(share_recipe_path, method: :post) do  %>
-  <%= label_tag :email, 'Email' %>
-  <%= text_field_tag :email %>
-  <%= label_tag :message, 'Mensagem' %>
-  <%= text_area_tag :message %>
-  <%= submit_tag 'Enviar' %>
-<% end %>
-
-<%= link_to "Voltar", root_path %>
-<%end%>
