@@ -1,4 +1,9 @@
 <h1><%= link_to recipe.title, recipe_path(recipe.id)%></h1>
+<% if recipe.featured? %>
+<figure class = "featured">
+  <%= image_tag ('star.png'), alt:'featured', size: '20'%>
+</figure>
+<%end%>
 <ul>
   <li><%= recipe.recipe_type.name %></li>
   <li><%= recipe.cuisine.name %></li>

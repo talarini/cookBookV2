@@ -23,4 +23,22 @@ require 'rails_helper'
 
       expect(page).to have_css('figure.featured')
     end
+    scenario 'featured recipe in root' do
+      user = create(:user)
+      recipe = create(:recipe, user:user, featured:true)
+
+      visit root_path
+
+      expect(page).to have_css('figure.featured')
+    end
+    scenario 'featured recipe in listing recipe page' do
+      user = create(:user)
+      recipe = create(:recipe, user:user, featured:true)
+
+      visit root_path
+      click_on 'Visualizar todas receitas'
+
+      expect(page).to have_css('figure.featured')
+    end
+
   end
