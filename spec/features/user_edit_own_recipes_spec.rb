@@ -1,36 +1,36 @@
 require 'rails_helper'
 
 feature 'Visitor cannot edit other recipe' do
-    scenario 'sucessfully' do
-      user = create (:user)
-      new_user = create(:user, email:'email3@email.com')
-      
-      sign_in user
+  scenario 'sucessfully' do
+    user = create :user
+    new_user = create(:user, email: 'email3@email.com')
 
-      cuisine = create(:cuisine, name: 'Brasileira')
-      recipe_type = create(:recipe_type, name: 'Sobremesa')
+    sign_in user
 
-      recipe = create(:recipe, title: 'Bolo de cenoura', recipe_type: recipe_type,
-                             cuisine: cuisine, user:new_user)
+    cuisine = create(:cuisine, name: 'Brasileira')
+    recipe_type = create(:recipe_type, name: 'Sobremesa')
 
-      visit root_path
-      click_on recipe.title
+    recipe = create(:recipe, title: 'Bolo de cenoura', recipe_type: recipe_type,
+                             cuisine: cuisine, user: new_user)
 
-      expect(page).not_to have_link("Editar")
-    end
-    scenario 'recipe owner edit his recipe' do
-      user = create (:user)
-      sign_in user
+    visit root_path
+    click_on recipe.title
 
-      cuisine = create(:cuisine, name: 'Brasileira')
-      recipe_type = create(:recipe_type, name: 'Sobremesa')
+    expect(page).not_to have_link('Editar')
+  end
+  scenario 'recipe owner edit his recipe' do
+    user = create :user
+    sign_in user
 
-      recipe = create(:recipe, title: 'Bolo de cenoura', recipe_type: recipe_type,
-                             cuisine: cuisine, user:user)
+    cuisine = create(:cuisine, name: 'Brasileira')
+    recipe_type = create(:recipe_type, name: 'Sobremesa')
 
-      visit root_path
-      click_on recipe.title
+    recipe = create(:recipe, title: 'Bolo de cenoura', recipe_type: recipe_type,
+                             cuisine: cuisine, user: user)
 
-      expect(page).to have_link("Editar")
-    end
+    visit root_path
+    click_on recipe.title
+
+    expect(page).to have_link('Editar')
+  end
 end

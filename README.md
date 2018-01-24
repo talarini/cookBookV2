@@ -5,4 +5,4 @@
 
 * Ruby version - 2.3.3
 
-Aplicação criada para o curso de imersão web do CampusCode
+Aplicacao criada para o curso de imersao web do CampusCode

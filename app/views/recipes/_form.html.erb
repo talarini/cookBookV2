@@ -6,15 +6,16 @@
     </div>
     <div>
       <%= f.label :recipe_type_id %>
-      <%= f.collection_select(:recipe_type_id, @recipe_types, :id, :name, include_blank: 'Selecione' )%>
+      <%= f.collection_select(:recipe_type_id, @recipe_types, :id,
+                              :name, include_blank: 'Selecione' )%>
     </div>
     <div>
       <%= f.label :cuisine_id %>
-      <%= f.collection_select(:cuisine_id, @cuisines, :id, :name, include_blank: 'Selecione')%>
+      <%= f.collection_select(:cuisine_id, @cuisines, :id,
+                              :name, include_blank: 'Selecione')%>
     </div>
     <div>
       <%= f.label :difficulty %>
-      <!-- <%= f.select(:difficulty, options_for_select([['Fácil', 'Fácil'], ['Medio', 'Medio'], ['Dificil', 'Difícil']]))%> -->
       <%= f.text_field :difficulty %>
     </div>
     <div>

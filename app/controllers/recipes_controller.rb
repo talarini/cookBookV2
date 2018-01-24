@@ -1,15 +1,14 @@
 class RecipesController < ApplicationController
-
-  before_action :get_recipes, only: [:edit, :update, :destroy, :show , :favorite, :destroy_favorite, :share]
-  before_action :get_types, only: [:show, :create, :update, :new]
-  before_action :authenticate_user! , only: [:edit,:favorites, :create]
+  before_action :recipes_get, only: %i[edit update destroy show favorite
+                                       destroy_favorite share]
+  before_action :types_get, only: %i[show create update new]
+  before_action :authenticate_user!, only: %i[edit favorites create]
 
   def index
     @recipes = Recipe.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @recipe = Recipe.new
@@ -50,29 +49,27 @@ class RecipesController < ApplicationController
 
   def search
     @search = params[:search]
-    @recipes = Recipe.where("title LIKE ? or ingredients LIKE ?", "%#{@search}%" ,"%#{@search}%" )
+    @recipes = Recipe.where('title LIKE ? or ingredients LIKE ?', "%#{@search}%", "%#{@search}%")
     flash.now[:error] = 'Nenhuma receita encontrada' unless @recipes.any?
   end
 
   def destroy
     if @recipe.destroy
       flash[:notice] = 'Receita removida com sucesso'
-      redirect_to root_path
     else
       flash[:error] = 'Algo deu errado, tente novamente'
-      redirect_to root_path
     end
+    redirect_to root_path
   end
 
   def favorite
     @favorite = Favorite.new(user: current_user, recipe: @recipe)
     if @favorite.save
       flash.now[:notice] = 'Receita favoritada com sucesso'
-      render :show
     else
       flash.now[:error] = 'Erro ao favoritar a receita'
-      render :show
     end
+    render :show
   end
 
   def favorites
@@ -94,7 +91,7 @@ class RecipesController < ApplicationController
     email = params[:email]
     msg = params[:message]
 
-    RecipesMailer.share(email,msg,@recipe.id).deliver_now
+    RecipesMailer.share(email, msg, @recipe.id).deliver_now
     flash[:notice] = "Receita compartilhada com #{email}"
     redirect_to @recipe
   end
@@ -103,15 +100,16 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:title, :recipe_type_id, :cuisine_id,
-      :difficulty, :cook_time, :ingredients, :method, :user, :image, :featured)
-    end
-
-    def get_recipes
-      @recipe = Recipe.find(params[:id])
-    end
-
-    def get_types
-      @cuisines = Cuisine.all
-      @recipe_types = RecipeType.all
-    end
+                                   :difficulty, :cook_time, :ingredients,
+                                   :method, :user, :image, :featured)
   end
+
+  def recipes_get
+    @recipe = Recipe.find(params[:id])
+  end
+
+  def types_get
+    @cuisines = Cuisine.all
+    @recipe_types = RecipeType.all
+  end
+end

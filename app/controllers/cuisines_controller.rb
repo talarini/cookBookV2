@@ -1,5 +1,4 @@
-class CuisinesController <ApplicationController
-
+class CuisinesController < ApplicationController
   def show
     @cuisine = Cuisine.find(params[:id])
   end
@@ -24,5 +23,4 @@ class CuisinesController <ApplicationController
   def cuisine_params
     params.require(:cuisine).permit(:name)
   end
-
 end

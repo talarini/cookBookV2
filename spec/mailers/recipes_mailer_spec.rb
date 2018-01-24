@@ -4,7 +4,7 @@ RSpec.describe RecipesMailer do
   describe 'share' do
     it 'send email' do
       user = create(:user)
-      recipe = create(:recipe, user:user)
+      recipe = create(:recipe, user: user)
 
       email = RecipesMailer.share('teste@teste.com', 'corpo', recipe.id)
 

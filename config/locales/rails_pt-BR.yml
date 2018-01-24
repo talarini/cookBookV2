@@ -3,10 +3,10 @@ pt-BR:
   activerecord:
     errors:
       messages:
-        record_invalid: 'A validação falhou: %{errors}'
+        record_invalid: 'A validacao falhou: %{errors}'
         restrict_dependent_destroy:
-          has_one: Não é possível excluir o registro pois existe um %{record} dependente
-          has_many: Não é possível excluir o registro pois existem %{record} dependentes
+          has_one: Nao e possivel excluir o registro pois existe um %{record} dependente
+          has_many: Nao e possivel excluir o registro pois existem %{record} dependentes
   date:
     abbr_day_names:
     - Dom
@@ -15,7 +15,7 @@ pt-BR:
     - Qua
     - Qui
     - Sex
-    - Sáb
+    - Sab
     abbr_month_names:
     -
     - Jan
@@ -33,11 +33,11 @@ pt-BR:
     day_names:
     - Domingo
     - Segunda-feira
-    - Terça-feira
+    - Terca-feira
     - Quarta-feira
     - Quinta-feira
     - Sexta-feira
-    - Sábado
+    - Sabado
     formats:
       default: "%d/%m/%Y"
       long: "%d de %B de %Y"
@@ -46,7 +46,7 @@ pt-BR:
     -
     - Janeiro
     - Fevereiro
-    - Março
+    - Marco
     - Abril
     - Maio
     - Junho
@@ -110,40 +110,40 @@ pt-BR:
     format: "%{attribute} %{message}"
     messages:
       accepted: deve ser aceito
-      blank: não pode ficar em branco
+      blank: nao pode ficar em branco
       present: deve ficar em branco
-      confirmation: não é igual a %{attribute}
-      empty: não pode ficar vazio
+      confirmation: nao e igual a %{attribute}
+      empty: nao pode ficar vazio
       equal_to: deve ser igual a %{count}
       even: deve ser par
-      exclusion: não está disponível
+      exclusion: nao esta disponivel
       greater_than: deve ser maior que %{count}
       greater_than_or_equal_to: deve ser maior ou igual a %{count}
-      inclusion: não está incluído na lista
-      invalid: não é válido
+      inclusion: nao esta incluido na lista
+      invalid: nao e valido
       less_than: deve ser menor que %{count}
       less_than_or_equal_to: deve ser menor ou igual a %{count}
-      model_invalid: 'A validação falhou: %{errors}'
-      not_a_number: não é um número
-      not_an_integer: não é um número inteiro
-      odd: deve ser ímpar
-      required: é obrigatório(a)
-      taken: já está em uso
+      model_invalid: 'A validacao falhou: %{errors}'
+      not_a_number: nao e um numero
+      not_an_integer: nao e um numero inteiro
+      odd: deve ser impar
+      required: e obrigatorio(a)
+      taken: ja esta em uso
       too_long:
-        one: 'é muito longo (máximo: 1 caracter)'
-        other: 'é muito longo (máximo: %{count} caracteres)'
+        one: 'e muito longo (maximo: 1 caracter)'
+        other: 'e muito longo (maximo: %{count} caracteres)'
       too_short:
-        one: 'é muito curto (mínimo: 1 caracter)'
-        other: 'é muito curto (mínimo: %{count} caracteres)'
+        one: 'e muito curto (minimo: 1 caracter)'
+        other: 'e muito curto (minimo: %{count} caracteres)'
       wrong_length:
-        one: não possui o tamanho esperado (1 caracter)
-        other: não possui o tamanho esperado (%{count} caracteres)
+        one: nao possui o tamanho esperado (1 caracter)
+        other: nao possui o tamanho esperado (%{count} caracteres)
       other_than: deve ser diferente de %{count}
     template:
       body: 'Por favor, verifique o(s) seguinte(s) campo(s):'
       header:
-        one: 'Não foi possível gravar %{model}: 1 erro'
-        other: 'Não foi possível gravar %{model}: %{count} erros'
+        one: 'Nao foi possivel gravar %{model}: 1 erro'
+        other: 'Nao foi possivel gravar %{model}: %{count} erros'
   helpers:
     select:
       prompt: Por favor selecione
@@ -172,18 +172,18 @@ pt-BR:
         format: "%n %u"
         units:
           billion:
-            one: bilhão
-            other: bilhões
+            one: bilhao
+            other: bilhoes
           million:
-            one: milhão
-            other: milhões
+            one: milhao
+            other: milhoes
           quadrillion:
-            one: quatrilhão
-            other: quatrilhões
+            one: quatrilhao
+            other: quatrilhoes
           thousand: mil
           trillion:
-            one: trilhão
-            other: trilhões
+            one: trilhao
+            other: trilhoes
           unit: ''
       format:
         delimiter: ""
